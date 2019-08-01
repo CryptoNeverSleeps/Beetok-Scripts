@@ -76,10 +76,10 @@ function create_config() {
 rpcuser=$RPCUSER
 rpcpassword=$RPCPASSWORD
 rpcport=$RPC_PORT
-rpcallowip=127.0.0.1
 listen=1
-server=1
 daemon=1
+txindex=1
+debug=1
 port=$COIN_PORT
 EOF
 }
@@ -87,29 +87,19 @@ EOF
 function update_config() {
   cat << EOF >> $CONFIGFOLDER/$CONFIG_FILE
 logintimestamps=1
-maxconnections=16
+maxconnections=500
 bind=$NODEIP
-masternode=1
-externalip=$NODEIP:$COIN_PORT
-masternodeprivkey=$COINKEY
+externalip=$NODEIP
 #Nodes
-addnode=155.138.211.131
-addnode=144.202.23.200
-addnode=96.30.193.105
-addnode=155.138.200.248
-addnode=155.138.161.190
-addnode=155.138.198.12
-addnode=155.138.234.10
-addnode=45.32.220.71
-addnode=155.138.230.245
-addnode=108.61.252.218
+addnode=136.244.101.5
+addnode=95.179.132.243
+addnode=136.244.80.45
 EOF
 }
 
 
 function enable_firewall() {
   echo -e "Installing and setting up firewall to allow ingress on port ${GREEN}$COIN_PORT${NC}"
-  ufw allow $COIN_PORT/tcp comment "$COIN_NAME MN port" >/dev/null
   ufw allow ssh comment "SSH" >/dev/null 2>&1
   ufw limit ssh/tcp >/dev/null 2>&1
   ufw default allow outgoing >/dev/null 2>&1
